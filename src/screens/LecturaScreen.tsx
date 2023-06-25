@@ -6,7 +6,7 @@ import { NavigationProps, ILecturas } from '../../types';
 
 
 //components
-//import Card from '../components/Card';
+import LecturaForm from './../components/forms/LecturaForm'
 
 
 const LecturaScreen = ({ navigation, route }: NavigationProps) => {
@@ -36,7 +36,7 @@ const LecturaScreen = ({ navigation, route }: NavigationProps) => {
   };
     return (
         <ScrollView>
-            
+            <LecturaForm navigation={navigation}/>
         </ScrollView>
     )
 
