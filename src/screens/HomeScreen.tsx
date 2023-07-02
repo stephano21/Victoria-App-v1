@@ -14,6 +14,7 @@ const HomeScreen = ({ navigation }: NavigationProps) => {
     try {
       setIsLoading(true); // Establecer isLoading a true al comenzar la carga de datos
       const response = await getProyectosApi("2");
+      console.info(response)
       setProjects(response);
     } catch (error) {
       console.error(error);

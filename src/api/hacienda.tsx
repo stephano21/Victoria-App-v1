@@ -1,17 +1,26 @@
 import { API_HOST } from "../static/Url";
+import axios from 'axios';
+import {IProyectos} from '../../types'
+import { Alert } from "react-native";
 
-export async function getProyectosApi(endpointUrl:string| null) {
-    try {
-      const url = `${API_HOST}/proyectos`;
-      console.log(url);
-      // Agregar un tiempo de espera de 1 segundo (1000 milisegundos)
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      const response = await fetch(endpointUrl || url);
-      const result = await response.json();
-    } catch (error) {
-      throw error;
-    }
+export const VictoriaAPI = axios.create({
+  baseURL:API_HOST
+})
+export async function getProyectosApi(endpointUrl: string | null) {
+  try {
+    const response = await VictoriaAPI.get<IProyectos[]>('/proyectos');
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    Alert.alert("Ocurrió un error!", error.toString(), [
+      {
+        text: 'ok'
+      }
+    ]);
+    throw error;
   }
+}
+
   
 export async function getLotesApi(id:number | null) {
   try {

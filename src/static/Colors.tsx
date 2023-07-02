@@ -9,7 +9,7 @@ export const Colors = {
     ligth:'#ffffff',
     dark:'#000000s',
     text: '#333333',
-    background: '#F9D877',
+    background: '#FFB85A',
     white:'#ffffff',
     yellow:'#DEAD1D',
     link:'#4B4342',

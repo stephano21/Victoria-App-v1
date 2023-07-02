@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { View, TextInput, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { Image, View, TextInput, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { NavigationProps } from './../../../types';
-import { Colors} from './../../static/Colors'
-const LoginForm = ({ navigation }: NavigationProps ): JSX.Element=> {
+import { Colors } from './../../static/Colors'
+const LoginForm = ({ navigation }: NavigationProps): JSX.Element => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     return (
         <View style={styles.container}>
+            <Image
+                source={require('../../../assets/icon.png')}
+                style={{ width: 100, height: 100 }}
+            />
             <TextInput
                 style={styles.input}
                 placeholder="Ususario"
@@ -16,7 +20,7 @@ const LoginForm = ({ navigation }: NavigationProps ): JSX.Element=> {
             />
             <TextInput
                 style={styles.input}
-                placeholder="Contraseña" 
+                placeholder="Contraseña"
                 placeholderTextColor={Colors.warning}
                 value={password}
                 secureTextEntry={true}
