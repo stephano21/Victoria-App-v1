@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { ScrollView, View, StyleSheet } from "react-native";
 import { getLotesApi } from "../api/hacienda";
 //
@@ -7,6 +7,9 @@ import { NavigationProps, ILotes } from '../../types';
 
 //components
 import Card from '../components/Card';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import InternetConnectionContext from "../api/InternetConnectionContext";
+import { LocalDataHandle } from "../localData/LocalStorange";
 
 
 const LoteScreen = ({ navigation, route }: NavigationProps) => {
@@ -28,13 +31,19 @@ const LoteScreen = ({ navigation, route }: NavigationProps) => {
   };
   useEffect(() => {
     (async () => {
-      await loadLotes();
+      if (isConnected) {
+        await loadLotes();
+      } else {
+        const data:ILotes[] = await LocalDataHandle(id,'LotesLocal','Id_Proyecto')
+        setProjects(data)
+      }
     })();
   }, []);
   const handleCardPress = (id:number, Lote: string) => {
     // Aquí puedes realizar la redirección a la nueva pantalla con la información correspondiente al ID
     navigation.navigate('Estaciones', { id: id , Lote: Lote})
   };
+  const isConnected = useContext(InternetConnectionContext);
     return (
         <ScrollView>
             <View style={styles.row}>

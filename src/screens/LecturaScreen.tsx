@@ -14,7 +14,7 @@ const LecturaScreen = ({ navigation, route }: NavigationProps) => {
   console.log("Id recived: "+id)
   const [proyectos, setProjects] = useState<ILecturas[]>([]);
 
-  const loadPlantas = async () => {
+  /* const loadPlantas = async () => {
     try {
       const response = await getPlantasApi(id)// Espera la respuesta de la API
       // proyectos es un arreglo de objetos con los datos que necesitas
@@ -30,13 +30,13 @@ const LecturaScreen = ({ navigation, route }: NavigationProps) => {
     (async () => {
       await loadPlantas();
     })();
-  }, []);
+  }, []); */
   const handleCardPress = (id:number, Estacion: string) => {
     // Aquí puedes realizar la redirección a la nueva pantalla con la información correspondiente al ID
   };
     return (
         <ScrollView>
-            <LecturaForm navigation={navigation}/>
+            <LecturaForm navigation={navigation} id={id} />
         </ScrollView>
     )
 

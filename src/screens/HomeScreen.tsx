@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { ScrollView, View, StyleSheet } from "react-native";
-import { getProyectosApi } from "../api/hacienda";
+import { getProyectosApi, getEstacionesApi, getLotesApi, getPlantasApi } from "../api/hacienda";
 import { NavigationProps, IProyectos } from './../../types';
 import Card from '../components/Card';
 import Loader from "../components/Loader";
+import InternetConnectionContext from "../api/InternetConnectionContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const HomeScreen = ({ navigation }: NavigationProps) => {
@@ -13,9 +15,15 @@ const HomeScreen = ({ navigation }: NavigationProps) => {
   const loadProyectos = async () => {
     try {
       setIsLoading(true); // Establecer isLoading a true al comenzar la carga de datos
-      const response = await getProyectosApi("2");
-      console.info(response)
+      const response = await getProyectosApi();
+      const [lotes, estaciones, plantas] = await Promise.all([
+        getLotesApi(),
+        getEstacionesApi(),
+        getPlantasApi()
+      ]);
       setProjects(response);
+      // Guardar los datos en AsyncStorage
+      //await SaveLocalData('proyectosData', response);
     } catch (error) {
       console.error(error);
     } finally {
@@ -25,14 +33,24 @@ const HomeScreen = ({ navigation }: NavigationProps) => {
 
   useEffect(() => {
     (async () => {
-      await loadProyectos();
+      if (isConnected) {
+        await loadProyectos();
+      } else {
+        const storedData = await AsyncStorage.getItem('ProyectosLocal');
+        if (storedData) {
+          console.log('offline')
+          const parsedData = JSON.parse(storedData);
+          console.log(parsedData)
+          setProjects(parsedData);
+        }
+      }
     })();
   }, []);
 
   const handleCardPress = (id: number, Nombre: string) => {
     navigation.navigate('Lotes', { id: id, Proyecto: Nombre });
   };
-
+  const isConnected = useContext(InternetConnectionContext);
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -51,7 +69,7 @@ const HomeScreen = ({ navigation }: NavigationProps) => {
               />
             ))}
           </View>
-          
+
         )}
       </View>
     </ScrollView>

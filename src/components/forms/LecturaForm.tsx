@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { View, TextInput, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, TextInput, StyleSheet, TouchableOpacity, Text, Alert } from "react-native";
 import { NavigationProps, ILecturas } from '../../../types';
 import { Colors } from '../../static/Colors';
 
-const LecturaForm = ({ navigation }: NavigationProps): JSX.Element => {
+const LecturaForm = ({ navigation, id }: NavigationProps & { id: number }): JSX.Element => {
     const [lectura, setLectura] = useState<ILecturas>({
         id: 0,
         E1: 0,
@@ -11,7 +11,7 @@ const LecturaForm = ({ navigation }: NavigationProps): JSX.Element => {
         E3: 0,
         E4: 0,
         E5: 0,
-        Id_Planta: 0,
+        Id_Planta: id,
         Monilla: null,
         Phythptora: null,
         Colletotrichum: null,
@@ -22,9 +22,16 @@ const LecturaForm = ({ navigation }: NavigationProps): JSX.Element => {
         Animales: null,
         Observacion: "",
     });
-
+    
     const handleInputChange = (key: keyof ILecturas, value: string | number | null) => {
-        setLectura({ ...lectura, [key]: value });
+        console.log(typeof value);
+        if (!isNaN(Number(value))) {
+            setLectura({ ...lectura, [key]: value });
+        }else{
+            const filteredValue = value.replace(/[^0-9]/g, '');
+            setLectura({ ...lectura, [key]: filteredValue });
+            //Alert.alert("re")
+        }
     };
 
     const handleSubmit = () => {
@@ -39,19 +46,100 @@ const LecturaForm = ({ navigation }: NavigationProps): JSX.Element => {
                 placeholder="E1"
                 placeholderTextColor={Colors.warning}
                 keyboardType="numeric"
-                value={lectura.E1.toString()}
                 onChangeText={(text) => handleInputChange("E1", Number(text))}
             />
-            
+
             <TextInput
                 style={styles.input}
                 placeholder="E2"
                 placeholderTextColor={Colors.warning}
                 keyboardType="numeric"
-                value={lectura.E2.toString()}
                 onChangeText={(text) => handleInputChange("E2", Number(text))}
             />
-           
+            <TextInput
+                style={styles.input}
+                placeholder="E3"
+                placeholderTextColor={Colors.warning}
+                keyboardType="numeric"
+                onChangeText={(text) => handleInputChange("E3", Number(text))}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="E4"
+                placeholderTextColor={Colors.warning}
+                keyboardType="numeric"
+                onChangeText={(text) => handleInputChange("E4", Number(text))}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="E5"
+                placeholderTextColor={Colors.warning}
+                keyboardType="numeric"
+                onChangeText={(text) => handleInputChange("E5", Number(text))}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Monilla"
+                placeholderTextColor={Colors.warning}
+                keyboardType="numeric"
+                onChangeText={(text) => handleInputChange("Monilla", text)}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Phythptora"
+                placeholderTextColor={Colors.warning}
+                keyboardType="numeric"
+                onChangeText={(text) => handleInputChange("Phythptora", text)}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Colletotrichum"
+                placeholderTextColor={Colors.warning}
+                keyboardType="numeric"
+                onChangeText={(text) => handleInputChange("Colletotrichum", text)}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Corynespora"
+                placeholderTextColor={Colors.warning}
+                keyboardType="numeric"
+                onChangeText={(text) => handleInputChange("Corynespora", text)}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Lasodiplodia"
+                placeholderTextColor={Colors.warning}
+                keyboardType="numeric"
+                onChangeText={(text) => handleInputChange("Lasodiplodia", text)}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Cherelles"
+                placeholderTextColor={Colors.warning}
+                keyboardType="numeric"
+                onChangeText={(text) => handleInputChange("Cherelles", text)}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Insectos"
+                placeholderTextColor={Colors.warning}
+                keyboardType="numeric"
+                onChangeText={(text) => handleInputChange("Insectos", text)}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Animales"
+                placeholderTextColor={Colors.warning}
+                keyboardType="numeric"
+                onChangeText={(text) => handleInputChange("Animales", text)}
+            />
+            <TextInput
+                style={styles.input}
+                multiline={true}
+                placeholder="Observacion"
+                placeholderTextColor={Colors.warning}
+                onChangeText={(text) => handleInputChange("Observacion", text)}
+            />
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Guardar</Text>
             </TouchableOpacity>

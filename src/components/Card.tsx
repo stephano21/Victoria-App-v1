@@ -31,7 +31,7 @@ const Card: React.FC<CardProps> = ({ id, title, image, description , onPress}) =
       <View style={cardStyle} >
         <View style={styles.card}>
           <Text style={styles.number}>{title}</Text>
-          <View style={{flex: 1, height: 1, backgroundColor: Colors.dark}} />
+          <View style={{flex: 1, height: 2, backgroundColor: Colors.dark}} />
           <Text style={styles.name}>{description}</Text>
           <Image source={{ uri: image }} style={styles.image} />
         </View>
@@ -57,10 +57,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 8,
+    padding:5,
+    color: Colors.dark,
+    
   },
   name: {
-    fontSize: 14,
+    fontSize: 20,
     marginBottom: 8,
+    color: Colors.dark,
+    marginTop:5,
+    alignSelf:'center',
+    textAlignVertical:'center'
   },
   image: {
     width: '100%',

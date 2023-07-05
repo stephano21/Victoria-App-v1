@@ -1,15 +1,16 @@
 import { API_HOST } from "../static/Url";
 import axios from 'axios';
-import {IProyectos} from '../../types'
+import {IEstaciones, ILotes, IPlantas, IProyectos} from '../../types'
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const VictoriaAPI = axios.create({
   baseURL:API_HOST
 })
-export async function getProyectosApi(endpointUrl: string | null) {
+export async function getProyectosApi() {
   try {
     const response = await VictoriaAPI.get<IProyectos[]>('/proyectos');
-    console.log(response.data);
+    await AsyncStorage.setItem('ProyectosLocal', JSON.stringify(response.data));
     return response.data;
   } catch (error) {
     Alert.alert("Ocurrió un error!", error.toString(), [
@@ -22,41 +23,36 @@ export async function getProyectosApi(endpointUrl: string | null) {
 }
 
   
-export async function getLotesApi(id:number | null) {
+export async function getLotesApi(id:number | null= null) {
   try {
-    var url: string =`${API_HOST}/lotes`;
+    var url: string =`/lotes`;
     if (id != null) url += `/`+id; 
-    //const url =`${API_HOST}/lotes`;
-    
-    
-    const response = await fetch(url);
-    const result = await response.json();
-    return result;
+    const response = await VictoriaAPI.get<ILotes[]>(url);
+    AsyncStorage.setItem('LotesLocal', JSON.stringify(response.data));
+    return response.data;
   } catch (error) {
     throw error;
   }
 }
   
-export async function getEstacionesApi(id:number | null) {
+export async function getEstacionesApi(id:number | null= null) {
   try {
-    var url = `${API_HOST}/estaciones`;///${id}
+    var url = `/estaciones`;///${id}
     if (id != null) url += `/`+id; 
-
-    const response = await fetch(url);
-    const result = await response.json();
-    return result;
+    const response = await VictoriaAPI.get<IEstaciones[]>(url);
+    AsyncStorage.setItem('EstacionesLocal', JSON.stringify(response.data));
+    return response.data;
   } catch (error) {
     throw error;
   }
 }
-export async function getPlantasApi(id:number | null) {
+export async function getPlantasApi(id:number | null=null) {
   try {
-    var url = `${API_HOST}/plantas`;///${id}
+    var url = `/plantas`;///${id}
     if (id != null) url += `/`+id; 
-
-    const response = await fetch(url);
-    const result = await response.json();
-    return result;
+    const response = await VictoriaAPI.get<IPlantas[]>(url);
+    AsyncStorage.setItem('PlantasLocal', JSON.stringify(response.data));
+    return response.data;
   } catch (error) {
     throw error;
   }

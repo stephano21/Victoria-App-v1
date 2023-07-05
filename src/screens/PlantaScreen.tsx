@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { ScrollView, View, StyleSheet } from "react-native";
 import { getPlantasApi } from "../api/hacienda";
 //
@@ -7,6 +7,8 @@ import { NavigationProps, IPlantas } from '../../types';
 
 //components
 import Card from '../components/Card';
+import InternetConnectionContext from "../api/InternetConnectionContext";
+import { LocalDataHandle } from "../localData/LocalStorange";
 
 
 const PlantaScreen = ({ navigation, route }: NavigationProps) => {
@@ -28,13 +30,19 @@ const PlantaScreen = ({ navigation, route }: NavigationProps) => {
   };
   useEffect(() => {
     (async () => {
-      await loadPlantas();
+      if (isConnected) {
+        await loadPlantas();
+      } else {
+        const data:IPlantas[] = await LocalDataHandle(id,'PlantasLocal','Id_Estacion')
+        setProjects(data)
+      }
     })();
   }, []);
   const handleCardPress = (id:number, Planta: string) => {
     // Aquí puedes realizar la redirección a la nueva pantalla con la información correspondiente al ID
     navigation.navigate('Lecturas', { id: id , Planta: Planta})
   };
+  const isConnected = useContext(InternetConnectionContext);
     return (
         <ScrollView>
             <View style={styles.row}>
