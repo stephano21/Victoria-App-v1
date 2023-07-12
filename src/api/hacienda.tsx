@@ -57,3 +57,12 @@ export async function getPlantasApi(id:number | null=null) {
     throw error;
   }
 }
+export async function SaveLectura(data:Ilecturas) {
+  try {
+    var url = '/lecturas';
+    const response = await VictoriaAPI.post(url,data)
+    console.log(response.data)
+  } catch (error) {
+    throw error;
+  }
+}
