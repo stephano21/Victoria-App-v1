@@ -59,10 +59,21 @@ export async function getPlantasApi(id:number | null=null) {
 }
 export async function SaveLectura(data:Ilecturas) {
   try {
-    var url = '/lecturas';
+    var url = '/lecturas/';
     const response = await VictoriaAPI.post(url,data)
     console.log(response.data)
+    Alert.alert("Transaccion exitosa","Se ha registrado exitosamente!"+response.status.toString(),  [
+            {
+              text: 'ok'
+            }
+          ])
+    return ;
   } catch (error) {
+  Alert.alert("Ocurrió un error!", error.toString(), [
+      {
+        text: 'ok'
+      }
+    ]);
     throw error;
   }
 }
