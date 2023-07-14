@@ -7,21 +7,22 @@ import { SaveLectura } from "../../api/hacienda";
 const LecturaForm = ({ navigation, id }: NavigationProps & { id: number }): JSX.Element => {
     const [lectura, setLectura] = useState<ILecturas>({
         
-        E1: 0,
-        E2: 0,
-        E3: 0,
-        E4: 0,
-        E5: 0,
+        E1: null,
+        E2: null,
+        E3: null,
+        E4: null,
+        E5: null,
         Id_Planta: id,
-        Monilla: 0,
-        Phythptora: 0,
-        Colletotrichum: 0,
-        Corynespora: 0,
-        Lasodiplodia: 0,
-        Cherelles: 0,
-        Insectos: 0,
-        Animales: 0,
-        Observacion: "Ninguna",
+        Monilla: null,
+        Phythptora: null,
+        Colletotrichum: null,
+        Corynespora: null,
+        Lasodiplodia: null,
+        Cherelles: null,
+        Insectos: null,
+        Animales: null,
+        Observacion: null,
+        FechaVisita: new Date(),
         Activo: true,
     });
     
@@ -46,11 +47,11 @@ const LecturaForm = ({ navigation, id }: NavigationProps & { id: number }): JSX.
 	  }
 
 	  // Aquí puedes realizar validaciones adicionales para propiedades específicas
-	  if (lectura.E1 === 0 || 
-	  lectura.E2 === 0 || 
-	  lectura.E3 === 0 ||
-	  lectura.E4 === 0 ||
-	  lectura.E5 === 0)
+	  if (lectura.E1 === null || 
+	  lectura.E2 === null || 
+	  lectura.E3 === null ||
+	  lectura.E4 === null ||
+	  lectura.E5 === null)
 	  {
 	    // Alguna propiedad es igual a cero
 	    Alert.alert("Rellenetodos los campos", "Recuerde rellenar todos los campos obligatorios!",[
@@ -61,6 +62,7 @@ const LecturaForm = ({ navigation, id }: NavigationProps & { id: number }): JSX.
 	    return;
 	  }
         // Aquí puedes hacer algo con los datos de lectura, como enviarlos a la API o realizar alguna acción
+        lectura.FechaVisita = new Date().toISOString();
         console.log(lectura);
         var response = await SaveLectura(lectura)
         

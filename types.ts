@@ -66,5 +66,6 @@ export interface ILecturas {
     Insectos:       null| number;
     Animales:       null| number;
     Observacion:    string;
+    FechaVisita:    Date;
     Activo:         boolean;
 }
