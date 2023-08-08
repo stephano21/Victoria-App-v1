@@ -69,3 +69,22 @@ export interface ILecturas {
     FechaVisita:    Date;
     Activo:         boolean;
 }
+export interface IToken {
+    access_token:  string;
+    refresh_token: string;
+}
+export interface ILogin {
+    username:  string;
+    password:  string;
+}
+export interface IRegister {
+    username:    string;
+    password:    string;
+    cedula:      number;
+    email:       string;
+    is_active:   boolean;
+    date_joined: Date;
+    first_name:  string;
+    last_name:   string;
+    is_staff:    boolean;
+}

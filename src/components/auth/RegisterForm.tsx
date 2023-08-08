@@ -17,6 +17,7 @@ const LoginForm = ({ navigation }: NavigationProps): JSX.Element => {
             source={require('../../../assets/icon.png')}
             style={styles.image}
           />
+          <Text style={styles.title}>Registrarse</Text>
           <View style={styles.formContainer}>
             <TextInput
               style={styles.input}
@@ -81,6 +82,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  title: {
+    	marginTop: 10,
+        width: '60%',
+        height: 50,
+        padding: 0,
+        borderWidth: 0,
+        fontSize:30,
+        fontWeight:'bold',
+        textAlign:'center',
+        marginBottom: 20,
+        color: Colors.link,
+
+    },
   formContainer: {
     width: '100%',
     maxWidth: 400,
